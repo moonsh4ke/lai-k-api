@@ -9,7 +9,7 @@ class HelloApiHandler(Resource):
 
     def post(self):
         print(self)
-        parser = reqparser.RequestParser()
+        parser = reqparse.RequestParser()
         parser.add_argument('type',type=str)
         parser.add_argument('message',type=str)
 
