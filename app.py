@@ -1,15 +1,27 @@
-from flask import Flask, send_from_directory
-from flask_restful import Api, Resource, reqparse
-from flask_cors import CORS #comentar en despliegue
-from API.HelloApiHandler import HelloApiHandler
+from flask import Flask
+from config import config
+from extensions import db
 
-app = Flask(__name__,static_url_path='',static_folder='frontend/build')
-CORS(app) #comentar en despliegue
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(config['development'])
 
-api = Api(app)
+    register_extensions(app)
+    register_blueprints(app)
+    return app
 
-@app.route("/",defaults={'path':''})
-def serve(path):
-    return send_from_directory(app.static_folder,'index.html')
+def register_extensions(app):
+    db.init_app(app)
 
-api.add_resource(HelloApiHandler,'/flask/hello')
+def register_blueprints(app):
+    #Importa las blueprints
+    from src.blueprints.auth import auth
+    from src.blueprints.usuario import usuario
+
+    # Registra las rutas en la app
+    app.register_blueprints(auth)
+    app.register_blueprints(usuario)
+
+if __name__ == '__main__':
+    app = create_app()
+    app.run(debug=True)
