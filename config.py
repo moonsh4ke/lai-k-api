@@ -1,11 +1,18 @@
-# Objeto de configuracion de la app de Flask
+import os
+
 class DevelopmentConfig():
     DEBUG = True
-    MYSQL_HOST = 'lai-k.cazjtw8hhb0a.us-east-1.rds.amazonaws.com'
-    MYSQL_PASSWORD = 'JFx9S7Tjlf8ehMnOV91d'
-    MYSQL_DB = 'lai-k'
-    SECRET_KEY = ''
+    CSRF_SESSION_KEY = "secret"
+    SECRET_KEY = 'secret'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DB_URI')
+
+class ProductionConfig():
+    DEBUG = False
+    CSRF_SESSION_KEY = "secret"
+    SECRET_KEY = 'secret'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DB_URI')
 
 config = {
-        'development' : DevelopmentConfig
+        'development': DevelopmentConfig,
+        'production': ProductionConfig 
 }
