@@ -1,6 +1,5 @@
 import bcrypt
 from flask import Flask
-import sqlalchemy
 from config import config
 from flask_sqlalchemy import SQLAlchemy
 
@@ -13,6 +12,10 @@ def create_app():
     return app
 
 def register_blueprints(app):
+    register_blueprint(app)
+    return app
+
+def register_blueprint(app):
     #Importa las blueprints
     from blueprints.auth import auth
     from blueprints.usuario import usuario
