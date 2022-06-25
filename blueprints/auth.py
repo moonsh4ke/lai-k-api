@@ -1,3 +1,4 @@
+from model.usuario import Usuario
 # Json Web Token
 import jwt
 # Funcion de hashing
@@ -5,7 +6,7 @@ import bcrypt
 from flask import Blueprint, jsonify, request
 from service.token_required import token_required
 from config import config
-from extensions import db
+from db import db
 # Tiempo para la expiracion del token
 import datetime
 
@@ -15,18 +16,15 @@ auth = Blueprint('auth', __name__)
 @auth.route('/api/login', methods=['POST'])
 def login():
     res = request.get_json()
-    rut = res["user"]
+    rut = res["rut"]
     password = res["password"]
 
-    cursor = db.connection.cursor()
-    query = f"SELECT * FROM usuario WHERE rut = {rut}"
-    cursor.execute(query)
-    usuario = cursor.fetchone()
+    registered_user = Usuario.query.get(res['rut'])
 
-    if res and bcrypt.checkpw(password, usuario[5].encode('utf-8')):
+    if res and bcrypt.checkpw(password.encode('utf-8'), registered_user.passwrd.encode('utf-8')):
         payload = {
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-            'iat': datetime.datetime.utcnow,
+            'iat': datetime.datetime.utcnow(),
             'sub': rut
         }
         token = jwt.encode(payload,
