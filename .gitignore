@@ -1,3 +1,4 @@
+*.orig
 *.vim
 .DS_Store
 .env
