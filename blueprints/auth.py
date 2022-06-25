@@ -3,7 +3,7 @@ import jwt
 # Funcion de hashing
 import bcrypt
 from flask import Blueprint, jsonify, request
-from src.service.token_required import token_required
+from service.token_required import token_required
 from config import config
 from extensions import db
 # Tiempo para la expiracion del token
@@ -12,7 +12,7 @@ import datetime
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('api/login', methods=['POST'])
+@auth.route('/api/login', methods=['POST'])
 def login():
     res = request.get_json()
     rut = res["user"]
