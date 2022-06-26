@@ -19,10 +19,14 @@ def register_blueprint(app):
     #Importa las blueprints
     from blueprints.auth import auth
     from blueprints.usuario import usuario
+    from blueprints.notificacion import notificacion
+    from blueprints.solicitud import solicitud
 
     # Registra las rutas en la app
     app.register_blueprint(auth)
     app.register_blueprint(usuario)
+    app.register_blueprint(notificacion)
+    app.register_blueprint(solicitud)
 
 if __name__ == '__main__':
     app = create_app()
