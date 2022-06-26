@@ -12,7 +12,7 @@ Windows (PowerShell)
 </code></pre>
 Linux & Mac
 <pre><code>
-echo "DB_URI={uri}" >> ~/.profile
+echo "export DB_URI={uri}" >> ~/.profile
 </code></pre>
 Restart shell and execute
 <pre><code>
