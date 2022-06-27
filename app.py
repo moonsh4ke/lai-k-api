@@ -16,6 +16,7 @@ def register_blueprint(app):
     from blueprints.comuna import comuna
     from blueprints.servicio import servicio
     from blueprints.duenio import duenio
+    from blueprints.dias import dias
 
     # Registra las rutas en la app
     app.register_blueprint(auth)
@@ -26,5 +27,6 @@ def register_blueprint(app):
     app.register_blueprint(duenio)
     app.register_blueprint(comuna)
     app.register_blueprint(servicio)
+    app.register_blueprint(dias)
     
 register_blueprint(app)

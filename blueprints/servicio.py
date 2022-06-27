@@ -11,7 +11,7 @@ def obtener_servicios():
     return jsonify(
         {
             'status': 'Ok',
-            'message': 'Comunas obtenidas correctamente',
+            'message': 'Servicios obtenidos correctamente',
             'data': servicio
         }
     ), 200

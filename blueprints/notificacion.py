@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
-from model.notificacion import Notificacion
-from db import db
+from model import Usuario, Profesional, Servicio, PlanificacionDia, Dia, Notificacion, db
+from app import db
 import bcrypt
 
 notificacion = Blueprint('notificacion', __name__)

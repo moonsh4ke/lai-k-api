@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
-from model.solicitud import Solicitud
-from db import db
+from model import Usuario, Profesional, Servicio, PlanificacionDia, Dia, Solicitud, db
+from app import db
 import bcrypt
 
 solicitud = Blueprint('solicitud', __name__)
