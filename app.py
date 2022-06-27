@@ -1,33 +1,30 @@
-import bcrypt
 from flask import Flask
 from config import config
 from flask_sqlalchemy import SQLAlchemy
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object(config['development'])
-    SQLAlchemy(app)
-
-    register_blueprints(app)
-    return app
-
-def register_blueprints(app):
-    register_blueprint(app)
-    return app
+app = Flask(__name__)
+app.config.from_object(config['development'])
+db = SQLAlchemy(app)
 
 def register_blueprint(app):
-    #Importa las blueprints
+    # Importa las blueprints
     from blueprints.auth import auth
-    from blueprints.usuario import usuario
-    from blueprints.notificacion import notificacion
-    from blueprints.solicitud import solicitud
+    # from blueprints.usuario import usuario
+    # from blueprints.notificacion import notificacion
+    # from blueprints.solicitud import solicitud
+    from blueprints.profesional import profesional
+    from blueprints.comuna import comuna
+    from blueprints.servicio import servicio
+    from blueprints.duenio import duenio
 
     # Registra las rutas en la app
     app.register_blueprint(auth)
-    app.register_blueprint(usuario)
-    app.register_blueprint(notificacion)
-    app.register_blueprint(solicitud)
-
-if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True)
+    # app.register_blueprint(usuario)
+    # app.register_blueprint(notificacion)
+    # app.register_blueprint(solicitud)
+    app.register_blueprint(profesional)
+    app.register_blueprint(duenio)
+    app.register_blueprint(comuna)
+    app.register_blueprint(servicio)
+    
+register_blueprint(app)
