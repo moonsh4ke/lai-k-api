@@ -1,3 +1,4 @@
+db_data/
 *.orig
 *.vim
 .DS_Store
