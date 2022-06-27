@@ -1,4 +1,4 @@
-from model.usuario import Usuario
+from model import Usuario
 # Json Web Token
 import jwt
 # Funcion de hashing
@@ -6,7 +6,6 @@ import bcrypt
 from flask import Blueprint, jsonify, request
 from service.token_required import token_required
 from config import config
-from db import db
 # Tiempo para la expiracion del token
 import datetime
 
