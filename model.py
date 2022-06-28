@@ -62,8 +62,8 @@ class Comuna(db.Model):
 
 
 class TipoNotificacion(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    descripcion = db.Column(db.String(30), nullable=False)
+    nombre = db.Column(db.String(100), primary_key=True, nullable=False)
+    descripcion = db.Column(db.String(100), nullable=False)
     notificaciones = db.relationship('Notificacion', backref='tipo')
 
     def __init__(self, descripcion):
@@ -77,21 +77,23 @@ class Notificacion(db.Model):
         db.String(10), db.ForeignKey('usuario.rut'), nullable=False)
     emisor_rut = db.Column(db.String(10), db.ForeignKey(
         'usuario.rut'), nullable=False)
-    tipo_id = db.Column(db.Integer, db.ForeignKey(
-        'tipo_notificacion.id'), nullable=False)
+    tipo_nombre = db.Column(db.String(100), db.ForeignKey(
+        'tipo_notificacion.nombre'), nullable=False)
     solicitud_id = db.Column(db.Integer, db.ForeignKey(
         'solicitud.id'), nullable=False)
+
+    solicitud = db.relationship('Solicitud', backref='notificacion')
 
     user_out = db.relationship(
         'Usuario', backref='notificaciones_out', foreign_keys=[emisor_rut])
     user_in = db.relationship(
         'Usuario', backref='notificaciones_in', foreign_keys=[receptor_rut])
 
-    def __init__(self, receptor_rut, emisor_rut, tipo_id, solicitud_id):
+    def __init__(self, receptor_rut, emisor_rut, tipo_nombre, estado):
         self.receptor_rut = receptor_rut
         self.emisor_rut = emisor_rut
-        self.tipo_id = tipo_id
-        self.solicitud_id = solicitud_id
+        self.tipo_nombre = tipo_nombre
+        self.estado = estado
 
 
 especialidad_profesional = db.Table('especialidad_profesional',
@@ -181,30 +183,30 @@ class PlanificacionDia(db.Model):
 
 class Especialidad(db.Model):
     nombre = db.Column(db.String(30), nullable=False, primary_key=True)
-    descipcion = db.Column(db.String(500), nullable=False)
+    descripcion = db.Column(db.String(500), nullable=False)
 
-    def __init__(self, nombre, descipcion):
+    def __init__(self, nombre, descripcion):
         self.nombre = nombre
-        self.descipcion = descipcion
+        self.descripcion = descripcion
 
 
 class Servicio(db.Model):
     nombre = db.Column(db.String(30), nullable=False, primary_key=True)
-    descipcion = db.Column(db.String(40), nullable=False)
+    descripcion = db.Column(db.String(40), nullable=False)
 
-    def __init__(self, nombre, descipcion):
+    def __init__(self, nombre, descripcion):
         self.nombre = nombre
-        self.descipcion = descipcion
+        self.descripcion = descripcion
 
 
 class EstadoVisita(db.Model):
     nombre = db.Column(db.String(30), nullable=False, primary_key=True)
-    descipcion = db.Column(db.String(30), nullable=False)
+    descripcion = db.Column(db.String(30), nullable=False)
     visitas = db.relationship('Visita', backref='estado')
 
-    def __init__(self, nombre, descipcion):
+    def __init__(self, nombre, descripcion):
         self.nombre = nombre
-        self.descipcion = descipcion
+        self.descripcion = descripcion
 
 
 class Visita(db.Model):
@@ -227,33 +229,34 @@ class Solicitud(db.Model):
         'duenio.rut'), nullable=False)
     direccion_id = db.Column(db.Integer, db.ForeignKey(
         'direccion.id'), nullable=False)
-    estado_nombre = db.Column(db.String(30), db.ForeignKey(
+    estado_nombre = db.Column(db.String(100), db.ForeignKey(
         'estado_solicitud.nombre'), nullable=False)
     comentario = db.Column(db.String(100), nullable=True)
 
     servicio_nombre = db.Column(db.String(30), db.ForeignKey(
         'servicio.nombre'), nullable=False)
 
-    servicio = db.relationship('Servicio', backref='solicitudes')
-
     fecha_hora = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, profesional_rut, duenio_rut, direccion_id, estado_nombre, comentario):
+    servicio = db.relationship('Servicio', backref='solicitudes')
+
+    def __init__(self, profesional_rut, duenio_rut, direccion_id, estado_nombre, fecha_hora, servicio):
         self.profesional_rut = profesional_rut
         self.duenio_rut = duenio_rut
         self.direccion_id = direccion_id
         self.estado_nombre = estado_nombre
-        self.comentario = comentario
+        self.fecha_hora = fecha_hora
+        self.servicio_nombre = servicio
 
 
 class EstadoSolicitud(db.Model):
-    nombre = db.Column(db.String(30), nullable=False, primary_key=True)
-    descipcion = db.Column(db.String(30), nullable=False)
+    nombre = db.Column(db.String(100), nullable=False, primary_key=True)
+    descripcion = db.Column(db.String(100), nullable=False)
     solicitudes = db.relationship('Solicitud', backref='estado')
 
     def __init__(self, nombre, descripcion):
         self.nombre = nombre
-        self.descipcion = descripcion
+        self.descripcion = descripcion
 
 
 # db.session.add(Comuna("Arica"))
