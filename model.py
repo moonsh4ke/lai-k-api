@@ -181,7 +181,7 @@ class PlanificacionDia(db.Model):
 
 class Especialidad(db.Model):
     nombre = db.Column(db.String(30), nullable=False, primary_key=True)
-    descipcion = db.Column(db.String(40), nullable=False)
+    descipcion = db.Column(db.String(500), nullable=False)
 
     def __init__(self, nombre, descipcion):
         self.nombre = nombre
