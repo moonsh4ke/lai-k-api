@@ -10,6 +10,7 @@ def register_blueprint(app):
     # Importa las blueprints
     from blueprints.auth import auth
     # from blueprints.usuario import usuario
+    from blueprints.direccion import direccion
     from blueprints.notificacion import notificacion
     from blueprints.solicitud import solicitud
     from blueprints.profesional import profesional
@@ -22,6 +23,7 @@ def register_blueprint(app):
     # Registra las rutas en la app
     app.register_blueprint(auth)
     # app.register_blueprint(usuario)
+    app.register_blueprint(direccion)
     app.register_blueprint(notificacion)
     app.register_blueprint(solicitud)
     app.register_blueprint(profesional)
